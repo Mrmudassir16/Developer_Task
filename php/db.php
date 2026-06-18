@@ -2,19 +2,40 @@
 // Database Configuration and Connection Helper
 
 // MySQL Database Credentials
-define('DB_HOST', '127.0.0.1');
-define('DB_USER', 'root');
-define('DB_PASS', '1234');
-define('DB_NAME', 'internship');
+define('DB_HOST', getenv('DB_HOST') ?: '127.0.0.1');
+define('DB_USER', getenv('DB_USER') ?: 'root');
+define('DB_PASS', getenv('DB_PASS') !== false ? getenv('DB_PASS') : '1234');
+define('DB_NAME', getenv('DB_NAME') ?: 'internship');
 
 // Redis Credentials
-define('REDIS_HOST', '127.0.0.1');
-define('REDIS_PORT', 6379);
+$redisUrl = getenv('REDIS_URL');
+$redisHost = '127.0.0.1';
+$redisPort = 6379;
+$redisAuth = null;
+if ($redisUrl) {
+    $parsed = parse_url($redisUrl);
+    if ($parsed) {
+        $redisHost = $parsed['host'] ?? $redisHost;
+        $redisPort = $parsed['port'] ?? $redisPort;
+        if (!empty($parsed['pass'])) {
+            $redisAuth = $parsed['pass'];
+        } elseif (!empty($parsed['user'])) {
+            $redisAuth = $parsed['user'];
+        }
+    }
+} else {
+    $redisHost = getenv('REDIS_HOST') ?: '127.0.0.1';
+    $redisPort = getenv('REDIS_PORT') !== false ? (int)getenv('REDIS_PORT') : 6379;
+    $redisAuth = getenv('REDIS_AUTH') ?: null;
+}
+define('REDIS_HOST', $redisHost);
+define('REDIS_PORT', $redisPort);
+define('REDIS_AUTH', $redisAuth);
 
 // MongoDB Credentials
-define('MONGO_URI', 'mongodb://127.0.0.1:27017');
-define('MONGO_DB', 'internship');
-define('MONGO_COLLECTION', 'profiles');
+define('MONGO_URI', getenv('MONGO_URI') ?: 'mongodb://127.0.0.1:27017');
+define('MONGO_DB', getenv('MONGO_DB') ?: 'internship');
+define('MONGO_COLLECTION', getenv('MONGO_COLLECTION') ?: 'profiles');
 
 /**
  * Returns a MySQL PDO instance.
@@ -64,10 +85,18 @@ function getMySQLConnection() {
 class RedisSocketClient {
     private $socket;
 
-    public function __construct($host = '127.0.0.1', $port = 6379) {
-        $this->socket = @fsockopen($host, $port, $errno, $errstr, 2);
+    public function __construct($host = '127.0.0.1', $port = 6379, $auth = null) {
+        $this->socket = @fsockopen($host, $port, $errno, $errstr, 5);
         if (!$this->socket) {
             throw new Exception("Could not connect to Redis: " . $errstr);
+        }
+        if ($auth) {
+            if (strpos($auth, ':') !== false) {
+                list($user, $pass) = explode(':', $auth, 2);
+                $this->execute(['AUTH', $user, $pass]);
+            } else {
+                $this->execute(['AUTH', $auth]);
+            }
         }
     }
 
@@ -139,8 +168,16 @@ function getRedisConnection() {
             if (class_exists('Redis')) {
                 $redis = new Redis();
                 $redis->connect(REDIS_HOST, REDIS_PORT);
+                if (defined('REDIS_AUTH') && REDIS_AUTH !== null) {
+                    if (strpos(REDIS_AUTH, ':') !== false) {
+                        list($user, $pass) = explode(':', REDIS_AUTH, 2);
+                        $redis->auth([$user, $pass]);
+                    } else {
+                        $redis->auth(REDIS_AUTH);
+                    }
+                }
             } else {
-                $redis = new RedisSocketClient(REDIS_HOST, REDIS_PORT);
+                $redis = new RedisSocketClient(REDIS_HOST, REDIS_PORT, defined('REDIS_AUTH') ? REDIS_AUTH : null);
             }
         } catch (Exception $e) {
             header('Content-Type: application/json');
