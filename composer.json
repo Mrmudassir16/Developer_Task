@@ -1,0 +1,7 @@
+{
+    "name": "developer-internship/task",
+    "description": "Registration, Login, and Profile Management Portal",
+    "require": {
+        "php": ">=8.0"
+    }
+}
