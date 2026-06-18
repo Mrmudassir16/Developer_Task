@@ -1,0 +1,300 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --bg-gradient-start: #0f172a;
+    --bg-gradient-end: #1e1b4b;
+    --card-bg: rgba(30, 41, 59, 0.45);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --primary-color: #6366f1;
+    --primary-hover: #4f46e5;
+    --accent-gradient: linear-gradient(135deg, #6366f1 0%, #d946ef 100%);
+    --accent-glow: rgba(99, 102, 241, 0.35);
+    --success-color: #10b981;
+    --error-color: #ef4444;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-primary);
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Background blob decorations for extra premium look */
+body::before, body::after {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    z-index: 0;
+    filter: blur(80px);
+    opacity: 0.15;
+    pointer-events: none;
+}
+
+body::before {
+    background: #6366f1;
+    top: 15%;
+    left: 15%;
+}
+
+body::after {
+    background: #d946ef;
+    bottom: 15%;
+    right: 15%;
+}
+
+.container-fluid {
+    z-index: 1;
+}
+
+/* Glassmorphism Card styling */
+.glass-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.glass-card:hover {
+    box-shadow: 0 15px 35px rgba(99, 102, 241, 0.12), 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.glass-card.profile-card {
+    max-width: 680px;
+}
+
+/* Header Text styling */
+.card-header-title {
+    font-weight: 700;
+    font-size: 2rem;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.5px;
+}
+
+.card-header-subtitle {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+}
+
+/* Form element styling */
+.form-label {
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.2px;
+}
+
+.form-control {
+    background: rgba(15, 23, 42, 0.5);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    color: var(--text-primary) !important;
+    padding: 0.75rem 1rem;
+    font-weight: 400;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    background: rgba(15, 23, 42, 0.7);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px var(--accent-glow);
+    outline: none;
+}
+
+.form-control::placeholder {
+    color: #475569;
+}
+
+.form-control:disabled {
+    background: rgba(15, 23, 42, 0.25);
+    color: #64748b !important;
+    border-color: rgba(255, 255, 255, 0.03);
+}
+
+/* Input group icons helper styling */
+.input-group-text {
+    background: rgba(15, 23, 42, 0.5);
+    border: 1px solid var(--card-border);
+    border-radius: 12px 0 0 12px;
+    color: var(--text-secondary);
+}
+
+.input-group .form-control {
+    border-radius: 0 12px 12px 0;
+}
+
+/* Button styling */
+.btn-premium {
+    background: var(--accent-gradient);
+    border: none;
+    border-radius: 12px;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.8rem 1.5rem;
+    width: 100%;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.25);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-premium:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+    opacity: 0.95;
+    color: #ffffff;
+}
+
+.btn-premium:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 10px rgba(99, 102, 241, 0.2);
+}
+
+.btn-premium-secondary {
+    background: transparent;
+    border: 1px solid var(--primary-color);
+    border-radius: 12px;
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.8rem 1.5rem;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.btn-premium-secondary:hover {
+    background: rgba(99, 102, 241, 0.1);
+    color: #ffffff;
+    border-color: #ffffff;
+    transform: translateY(-2px);
+}
+
+/* Alert modifications */
+.custom-alert {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    border-radius: 12px;
+    color: #fca5a5;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+    display: none;
+    align-items: center;
+    gap: 8px;
+    animation: shake 0.4s ease;
+}
+
+.custom-alert.alert-success {
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    color: #a7f3d0;
+}
+
+/* Links inside cards */
+.auth-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.auth-link:hover {
+    color: #d946ef;
+    text-decoration: underline;
+}
+
+/* Spinner overlay for AJAX loads */
+.spinner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.7);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.spinner-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.loader {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    border-left-color: var(--primary-color);
+    animation: spin 1s linear infinite;
+}
+
+/* Keyframes */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+}
+
+/* Mobile responsive fixes */
+@media (max-width: 576px) {
+    .glass-card {
+        padding: 1.75rem;
+        border-radius: 16px;
+    }
+    .card-header-title {
+        font-size: 1.75rem;
+    }
+}

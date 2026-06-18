@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Premium Portal</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="row min-vh-100 align-items-center py-5">
+            <div class="col-12">
+                <div class="glass-card position-relative">
+                    <!-- Loading Spinner Overlay -->
+                    <div id="loader-overlay" class="spinner-overlay">
+                        <div class="loader"></div>
+                    </div>
+
+                    <div class="text-center">
+                        <h1 class="card-header-title">Welcome Back</h1>
+                        <p class="card-header-subtitle">Sign in to access your secure profile</p>
+                    </div>
+
+                    <!-- Custom Alert Box -->
+                    <div id="alert-box" class="custom-alert">
+                        <i class="fa-solid fa-circle-exclamation me-2"></i>
+                        <span id="alert-message">Error message goes here</span>
+                    </div>
+
+                    <!-- Form (Strictly AJAX, no action or method) -->
+                    <form id="login-form" novalidate>
+                        <!-- Email Address -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email Address</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fa-regular fa-envelope"></i></span>
+                                <input type="email" class="form-control" id="email" placeholder="john@example.com" required>
+                            </div>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="mb-4">
+                            <label for="password" class="form-label">Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                                <input type="password" class="form-control" id="password" placeholder="••••••••" required>
+                            </div>
+                        </div>
+
+                        <!-- Login Button -->
+                        <button type="submit" class="btn btn-premium mb-3">
+                            Log In <i class="fa-solid fa-arrow-right-to-bracket ms-2"></i>
+                        </button>
+                    </form>
+
+                    <div class="text-center mt-3">
+                        <span class="text-secondary small">Don't have an account? </span>
+                        <a href="register.html" class="auth-link small">Register</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/login.js"></script>
+</body>
+</html>
