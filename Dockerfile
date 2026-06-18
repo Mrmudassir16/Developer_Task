@@ -12,11 +12,17 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
     libcurl4 \
     && rm -rf /var/lib/apt/lists/*
 
-# Download and install MongoDB community edition binaries (Debian 12 compatible version)
-RUN wget https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-debian12-7.0.12.tgz \
-    && tar -zxvf mongodb-linux-x86_64-debian12-7.0.12.tgz \
-    && mv mongodb-linux-x86_64-debian12-7.0.12/bin/* /usr/local/bin/ \
-    && rm -rf mongodb-linux-x86_64-debian12-7.0.12*
+# Download and install libssl1.1 (required for MongoDB 4.4 on Debian Bookworm base)
+RUN wget -q http://security.debian.org/debian-security/pool/updates/main/o/openssl/libssl1.1_1.1.1w-0+deb11u1_amd64.deb || \
+    wget -q http://ftp.debian.org/debian/pool/main/o/openssl/libssl1.1_1.1.1w-0+deb11u1_amd64.deb \
+    && dpkg -i libssl1.1_1.1.1w-0+deb11u1_amd64.deb \
+    && rm libssl1.1_1.1.1w-0+deb11u1_amd64.deb
+
+# Download and install MongoDB 4.4.31 community edition binaries (AVX instruction NOT required)
+RUN wget -q https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-debian10-4.4.31.tgz \
+    && tar -zxvf mongodb-linux-x86_64-debian10-4.4.31.tgz \
+    && mv mongodb-linux-x86_64-debian10-4.4.31/bin/* /usr/local/bin/ \
+    && rm -rf mongodb-linux-x86_64-debian10-4.4.31*
 
 # Install PHP extensions
 RUN pecl install mongodb \

@@ -6,7 +6,10 @@ redis-server --daemonize yes
 
 echo "Starting MongoDB..."
 mkdir -p /data/db
-mongod --fork --logpath /var/log/mongodb.log --dbpath /data/db --bind_ip 127.0.0.1 --storageEngine ephemeralForTest
+mongod --dbpath /data/db --bind_ip 127.0.0.1 --storageEngine ephemeralForTest &
+
+# Give MongoDB a couple of seconds to bind
+sleep 2
 
 echo "Starting MariaDB..."
 service mariadb start
