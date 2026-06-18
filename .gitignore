@@ -7,6 +7,8 @@
 /mongodb-data/
 *.db
 *.sqlite
+dump.rdb
+*.rdb
 
 # Exclude zip archives and downloads
 *.zip

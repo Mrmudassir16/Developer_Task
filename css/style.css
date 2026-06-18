@@ -152,6 +152,16 @@ body::after {
     border-radius: 0 12px 12px 0;
 }
 
+.icon-svg {
+    display: inline-block;
+    vertical-align: middle;
+    color: var(--text-secondary);
+}
+
+.input-group-text .icon-svg {
+    color: var(--text-secondary);
+}
+
 /* Button styling */
 .btn-premium {
     background: var(--accent-gradient);
